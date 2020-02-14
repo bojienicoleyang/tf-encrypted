@@ -83,8 +83,12 @@ class Sequential(Layer):
     else:
       self._layers.append(layer)
 
-  # pylint: disable=arguments-differ
-  def call(self, inputs, training=None, mask=None):
+  def call(
+      self,
+      inputs,
+      training=None,
+      mask=None,
+  ):  # pylint: disable=arguments-differ
     if training is not None:
       raise NotImplementedError()
     if mask is not None:
