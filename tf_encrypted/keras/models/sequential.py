@@ -11,10 +11,7 @@ from tf_encrypted.protocol.pond import PondPrivateTensor
 
 
 class Sequential(Layer):
-  """Model defined by a stack of layers in sequence.
-
-  TODO
-  """
+  """Model defined by a stack of layers in sequence."""
 
   def __init__(self, layers=None, name=None):
     super(Sequential, self).__init__(name=name)

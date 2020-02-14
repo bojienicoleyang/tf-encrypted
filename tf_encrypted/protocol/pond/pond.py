@@ -796,11 +796,11 @@ class Pond(Protocol):
 
     elif isinstance(variable, PondPublicVariable):
       assert isinstance(value, PondPublicTensor), type(value)
-      assert (variable.is_scaled == value.is_scaled), ("Scaling must match: "
-                                                       "{}, {}").format(
-                                                           variable.is_scaled,
-                                                           value.is_scaled,
-                                                       )
+      assert (variable.is_scaled == value.is_scaled), (
+          "Scaling must match: {}, {}".format(
+              variable.is_scaled,
+              value.is_scaled,
+          ))
 
       var0, var1 = variable.variable_on_0, variable.variable_on_1
       val0, val1 = value.value_on_0, value.value_on_1
