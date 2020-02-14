@@ -389,11 +389,9 @@ class Pond(Protocol):
     suffix = "-" + name if name else ""
 
     def helper(v: tf.Tensor) -> "PondPublicTensor":
-      assert v.shape.is_fully_defined(), ("Shape of input '{}' on '{}' is not "
-                                          "fully defined").format(
-                                              name if name else "",
-                                              player.name,
-                                          )
+      assert v.shape.is_fully_defined(), (
+          "Shape of input '{}' on '{}' is not fully defined".format(
+              name if name else "", player.name))
       enc = self._encode(v, apply_scaling, tf_int_type=factory.native_type)
       w = factory.tensor(enc)
       return PondPublicTensor(self, w, w, apply_scaling)
@@ -538,11 +536,9 @@ class Pond(Protocol):
     assert isinstance(player, Player)
 
     def share_output(v: tf.Tensor):
-      assert v.shape.is_fully_defined(), ("Shape of return value '{}' on '{}' "
-                                          "not fully defined").format(
-                                              name_scope if name_scope else "",
-                                              player.name,
-                                          )
+      assert v.shape.is_fully_defined(), (
+          "Shape of return value '{}' on '{}' not fully defined".format(
+              name_scope if name_scope else "", player.name))
 
       enc = self._encode(v, apply_scaling, tf_int_type=factory.native_type)
       w = factory.tensor(enc)
