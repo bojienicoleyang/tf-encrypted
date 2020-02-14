@@ -49,8 +49,8 @@ class TestInt100Tensor(unittest.TestCase):
       bits = [0] * (min_bitlength - len(bits)) + bits
       return list(reversed(bits))
 
-    expected = np.array([as_bits((modulus + x) % modulus, bitlen) for x in raw
-                        ]).reshape(shape + (bitlen,))
+    expected = np.array([as_bits((modulus + x) % modulus, bitlen) for x in raw])
+    expected = expected.reshape(shape + (bitlen,))
 
     x = int100factory.tensor(np.array(raw).reshape(shape))
     epi = ensure_positive_interpretation
