@@ -11,8 +11,12 @@ from tensorflow.python.platform import gfile
 from tensorflow.python.framework import graph_util
 from tensorflow.python.framework import graph_io
 from tensorflow.keras import backend as K
-from tensorflow.keras.layers import Flatten, Conv2D, Dense, DepthwiseConv2D, \
-  GlobalAveragePooling2D, GlobalMaxPooling2D
+from tensorflow.keras.layers import Flatten
+from tensorflow.keras.layers import Conv2D
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import DepthwiseConv2D
+from tensorflow.keras.layers import GlobalAveragePooling2D
+from tensorflow.keras.layers import GlobalMaxPooling2D
 from tensorflow.keras.models import Sequential
 
 import tf_encrypted as tfe
