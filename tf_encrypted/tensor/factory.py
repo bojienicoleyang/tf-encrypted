@@ -73,7 +73,6 @@ class AbstractFactory(abc.ABC):
 
   @abc.abstractmethod
   def variable(self, initial_value):
-    """ Create a variable of this data type using raw `initial_value`. """
     """Create a variable of this data type using raw `initial_value`."""
 
   @abc.abstractmethod
