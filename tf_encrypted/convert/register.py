@@ -10,10 +10,18 @@ import numpy as np
 import tensorflow as tf
 
 import tf_encrypted as tfe
-from ..layers import Conv2D, Relu, Sigmoid, Dense, AveragePooling2D, MaxPooling2D
-from ..keras.layers import BatchNormalization, DepthwiseConv2D, \
-  GlobalAveragePooling2D, GlobalMaxPooling2D
-from ..protocol.pond import PondPrivateTensor, PondMaskedTensor
+from ..layers import AveragePooling2D
+from ..layers import MaxPooling2D
+from ..layers import Conv2D
+from ..layers import Dense
+from ..layers import Relu
+from ..layers import Sigmoid
+from ..keras.layers import BatchNormalization
+from ..keras.layers import DepthwiseConv2D
+from ..keras.layers import GlobalAveragePooling2D
+from ..keras.layers import GlobalMaxPooling2D
+from ..protocol.pond import PondPrivateTensor
+from ..protocol.pond import PondMaskedTensor
 
 
 def registry():
@@ -460,7 +468,7 @@ def _squeeze(converter, node: Any, inputs: List[str]) -> Any:
 
 def _split(converter, node: Any, inputs: List[str]) -> Any:
   if node.op == "SplitV":
-    #node.op is SplitV when num_or_size_splits is a list
+    # node.op is SplitV when num_or_size_splits is a list
     x_in = converter.outputs[inputs[0]]
     size_splits = converter.outputs[inputs[1]]
     axis = converter.outputs[inputs[2]]
@@ -469,7 +477,7 @@ def _split(converter, node: Any, inputs: List[str]) -> Any:
     num_or_size_splits = list(array.array('I', size_splits.tensor_content))
 
   else:
-    #node.op is Split when num_or_size_splits is an integer
+    # node.op is Split when num_or_size_splits is an integer
     axis = converter.outputs[inputs[0]]
     x_in = converter.outputs[inputs[1]]
 
@@ -519,7 +527,9 @@ def _rsqrt(converter, node: Any, inputs: List[str]) -> Any:
   else:
     # XXX this is a little weird but the input into rsqrt is public and
     # being used only for batchnorm at the moment
-    decoded = tfe._decode(x_in.value_on_0, True)  # pylint: disable=protected-access
+    # pylint: disable=protected-access
+    prot = tfe.get_protocol()
+    decoded = prot._decode(x_in.value_on_0, True)
 
     def inputter_fn():
       return tf.rsqrt(decoded)
@@ -743,7 +753,8 @@ def _slice(converter, node, inputs):
   # (integer until which the slicing takes place) as input.
   # We can infere the end parameter with : end[i] = begin[i] + size[i].
   # If size is negative, the stepping go towards smaller indices.
-  # In this case we can infer the end parameter with: end[i] = input_shape[i] - size[i] + 1
+  # In this case we can infer the end parameter with:
+  # end[i] = input_shape[i] - size[i] + 1
   end = np.zeros(len(begin))
   input_shape = x_in.shape.as_list()
 
