@@ -623,6 +623,7 @@ def _lsb_private(prot, x: PondPrivateTensor):
       clsb = prot.lsb(c)
 
     with tf.name_scope('unblind'):
+      gamma = prot.bitwise_xor(greater_xor_beta,
                                prot.cast_backing(beta, out_dtype))
       delta = prot.bitwise_xor(rlsb, clsb)
       alpha = prot.bitwise_xor(gamma, delta)

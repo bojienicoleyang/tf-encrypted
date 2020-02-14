@@ -47,7 +47,8 @@ def get_session(op_input_list=()):
 
 def _current_graph(op_input_list):
   """Return the graph members of `op_input_list`, or the current graph."""
-  return ops._get_graph_from_inputs(op_input_list)  # pylint: disable=protected-access
+  # pylint: disable=protected-access
+  return ops._get_graph_from_inputs(op_input_list)
 
 
 def set_session(session):
