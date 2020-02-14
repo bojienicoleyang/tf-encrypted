@@ -91,8 +91,8 @@ class TestLSB(unittest.TestCase):
     f_bin = np.vectorize(np.binary_repr)
     f_get = np.vectorize(lambda x, ix: x[ix])
 
-    raw = np.array([random.randrange(0, 10000000000) for _ in range(20)
-                   ]).reshape((2, 2, 5))
+    raw = np.array([random.randrange(0, 10000000000) for _ in range(20)])
+    raw = raw.reshape((2, 2, 5))
     expected_lsb = f_get(f_bin(raw), -1).astype(np.int32)
 
     with tfe.protocol.SecureNN(
