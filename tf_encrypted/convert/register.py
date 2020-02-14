@@ -527,8 +527,8 @@ def _rsqrt(converter, node: Any, inputs: List[str]) -> Any:
   else:
     # XXX this is a little weird but the input into rsqrt is public and
     # being used only for batchnorm at the moment
-    # pylint: disable=protected-access
     prot = tfe.get_protocol()
+    # pylint: disable=protected-access
     decoded = prot._decode(x_in.value_on_0, True)
 
     def inputter_fn():
