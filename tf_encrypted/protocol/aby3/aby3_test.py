@@ -1,7 +1,6 @@
 # pylint: disable=all
 # pylint: disable=missing-docstring
-# noqa: D102
-# flake8: noqa: D102
+# flake8: noqa
 
 import os
 import tempfile

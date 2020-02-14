@@ -267,8 +267,9 @@ def _instantiate_tfe_layer(keras_layer_config):
   except AttributeError:
     # TODO: rethink how we warn the user about this, maybe codegen a list of
     #       supported layers in a doc somewhere
-    raise RuntimeError("TF Encrypted does not yet support the "
-                       "{lcls} layer.".format(lcls=keras_layer_type))
+    raise RuntimeError(
+        "TF Encrypted does not yet support the {lcls} layer.".format(
+            lcls=keras_layer_type))
 
   # get layer config to instiate the tfe layer with the right parameters
   config = keras_layer_config['config']

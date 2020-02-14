@@ -45,7 +45,10 @@ class TestLosses(unittest.TestCase):
       expected_der = sess.run(der_for_y_pred)
 
     np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
-    # TODO: asserting below is currently failing; is this expected?
+
+    # TODO: assertion below is currently failing; is this expected?
+    del actual_der
+    del expected_der
     # np.testing.assert_allclose(actual_der, expected_der, rtol=1e-1, atol=1e-1)
 
   def test_binary_crossentropy_from_logits(self):

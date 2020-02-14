@@ -31,7 +31,6 @@ def crt_factory(INT_TYPE, MODULI):  # pylint: disable=invalid-name
 
   # pylint: disable=invalid-name
   MATMUL_THRESHOLD = 1024
-
   MODULUS = prod(MODULI)
   BITSIZE = math.ceil(math.log2(MODULUS))
   # pylint: enable=invalid-name
