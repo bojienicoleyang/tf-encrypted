@@ -1,3 +1,5 @@
+# pylint: disable=missing-docstring
+
 import numpy as np
 
 import tf_encrypted as tfe

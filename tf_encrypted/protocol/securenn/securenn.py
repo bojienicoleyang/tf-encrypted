@@ -16,7 +16,8 @@ import tensorflow as tf
 
 from tf_encrypted.config import get_config
 from tf_encrypted.player import Player
-from tf_encrypted.protocol import memoize, nodes
+from tf_encrypted.protocol import memoize
+from tf_encrypted.protocol.protocol import nodes
 from tf_encrypted.protocol.securenn.odd_tensor import oddint64_factory
 from tf_encrypted.protocol.pond import Pond, PondTensor, PondPublicTensor, PondPrivateTensor, PondMaskedTensor, _type
 from tf_encrypted.tensor import native_factory, int64factory
