@@ -1,6 +1,8 @@
+# pylint: disable=all
 # pylint: disable=missing-docstring
+# noqa: D102
+# flake8: noqa: D102
 
-import glob
 import os
 import tempfile
 import unittest
