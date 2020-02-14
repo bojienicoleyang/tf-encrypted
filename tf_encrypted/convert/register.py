@@ -75,8 +75,7 @@ with open(specops_path, "r") as stream:
 # pylint: disable=unused-argument
 # pylint: disable=missing-docstring
 def _placeholder(converter, node: Any, inputs: List[str]) -> Any:
-  return tf.placeholder(node.attr["dtype"].type,
-                        shape=node.attr["shape"].shape)
+  return tf.placeholder(node.attr["dtype"].type, shape=node.attr["shape"].shape)
 
 
 def _constant(converter, node: Any, inputs: List[str]) -> Any:
@@ -117,8 +116,7 @@ def _matmul(converter, node: Any, inputs: List[str]) -> Any:
   def inputter_fn():
     return tf.constant(np.array(nums).reshape(b_shape))
 
-  w = tfe.define_private_input(converter.model_provider,
-                                              inputter_fn)
+  w = tfe.define_private_input(converter.model_provider, inputter_fn)
 
   layer.initialize(initial_weights=w)
 
@@ -171,17 +169,17 @@ def _keras_conv2d(converter, interiors, inputs):
   strides = int(max(conv_op.attr["strides"].list.i))
   padding = conv_op.attr["padding"].s.decode('ascii')
 
-  layer = Conv2D(
-      input_shape, shape,
-      strides=strides,
-      padding=padding,
-      channels_first=fmt == "NCHW"
-  )
+  layer = Conv2D(input_shape,
+                 shape,
+                 strides=strides,
+                 padding=padding,
+                 channels_first=fmt == "NCHW")
 
   layer.initialize(initial_weights=k, initial_bias=b)
   out = layer.forward(x_in)
 
   return out
+
 
 def _keras_depthwise_conv2d(converter, interiors, inputs):
   x_in = converter.outputs[inputs[0]]
@@ -235,8 +233,7 @@ def _keras_dense(converter, interiors, inputs):
   input_shape = x_in.shape.as_list()
   shape = [i.size for i in kernel.attr["value"].tensor.tensor_shape.dim]
 
-  layer = Dense(input_shape,
-                out_features=shape[1])
+  layer = Dense(input_shape, out_features=shape[1])
 
   layer.initialize(initial_weights=k, initial_bias=b)
   out = layer.forward(x_in)
@@ -308,13 +305,15 @@ def _strided_slice(converter, node: Any, inputs: List[str]) -> Any:
   end = tf.constant(end.attr["value"].tensor)
   strides = tf.constant(strides.attr["value"].tensor)
 
-  return tfe.strided_slice(input_out, begin, end,
-                                          strides=strides,
-                                          begin_mask=begin_mask,
-                                          end_mask=end_mask,
-                                          ellipsis_mask=ellipsis_mask,
-                                          new_axis_mask=new_axis_mask,
-                                          shrink_axis_mask=shrink_axis_mask)
+  return tfe.strided_slice(input_out,
+                           begin,
+                           end,
+                           strides=strides,
+                           begin_mask=begin_mask,
+                           end_mask=end_mask,
+                           ellipsis_mask=ellipsis_mask,
+                           new_axis_mask=new_axis_mask,
+                           shrink_axis_mask=shrink_axis_mask)
 
 
 def _pack(converter, node: Any, inputs: List[str]) -> Any:
@@ -493,8 +492,7 @@ def _pad(converter, node: Any, inputs: List[str]) -> Any:
   paddings_t = p.attr["value"].tensor
 
   paddings_arr = list(array.array('I', paddings_t.tensor_content))
-  paddings_lst = [paddings_arr[i:i + 2]
-                  for i in range(0, len(paddings_arr), 2)]
+  paddings_lst = [paddings_arr[i:i + 2] for i in range(0, len(paddings_arr), 2)]
 
   return tfe.pad(x_in, paddings_lst)
 
@@ -526,8 +524,7 @@ def _rsqrt(converter, node: Any, inputs: List[str]) -> Any:
     def inputter_fn():
       return tf.rsqrt(decoded)
 
-  x = tfe.define_public_input(
-      converter.model_provider, inputter_fn)
+  x = tfe.define_public_input(converter.model_provider, inputter_fn)
 
   return x
 
@@ -602,6 +599,7 @@ def _avgpool(converter, node: Any, inputs: List[str]) -> Any:
   out = avg.forward(x_in)
 
   return out
+
 
 def _keras_global_avgpool(converter, node: Any, inputs: List[str]) -> Any:
   x_in = converter.outputs[inputs[0]]
@@ -716,10 +714,9 @@ def _required_space_to_batch_paddings(converter, node, inputs: List[str]):
       )
       return tf.cast(crops, tf.float64)
 
-  pad_private = tfe.define_public_input(
-      converter.model_provider, inputter_pad)
-  crop_private = tfe.define_public_input(
-      converter.model_provider, inputter_crop)
+  pad_private = tfe.define_public_input(converter.model_provider, inputter_pad)
+  crop_private = tfe.define_public_input(converter.model_provider,
+                                         inputter_crop)
 
   return (pad_private, crop_private)
 
@@ -793,8 +790,7 @@ def _nodef_to_public_pond(converter, x):
     def inputter_fn():
       return tf.constant(np.array(nums).reshape(x_shape))
 
-  x_public = tfe.define_public_input(
-      converter.model_provider, inputter_fn)
+  x_public = tfe.define_public_input(converter.model_provider, inputter_fn)
 
   return x_public
 
@@ -835,8 +831,7 @@ def _nodef_to_private_pond(converter, x):
     def inputter_fn():
       return tf.constant(np.array(nums).reshape(x_shape))
 
-  x_private = tfe.define_private_input(
-      converter.model_provider, inputter_fn)
+  x_private = tfe.define_private_input(converter.model_provider, inputter_fn)
 
   return x_private
 

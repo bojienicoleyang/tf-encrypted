@@ -5,8 +5,10 @@ import numpy as np
 import tensorflow as tf
 
 import tf_encrypted as tfe
+
 np.random.seed(42)
 tf.random.set_random_seed(42)
+
 
 class TestLosses(unittest.TestCase):
 
@@ -43,6 +45,7 @@ class TestLosses(unittest.TestCase):
       expected_der = sess.run(der_for_y_pred)
 
     np.testing.assert_allclose(actual, expected, rtol=1e-1, atol=1e-1)
+    np.testing.assert_allclose(actual_der, expected_der, rtol=1e-1, atol=1e-1)
 
   def test_binary_crossentropy_from_logits(self):
 
@@ -68,7 +71,7 @@ class TestLosses(unittest.TestCase):
       y_pred = tf.convert_to_tensor(y_pred_np)
       loss = tf.keras.losses.BinaryCrossentropy(from_logits=True)
       out = loss(y_true, y_pred)
-      der_for_y_pred = tf.sigmoid(y_pred)-y_true
+      der_for_y_pred = tf.sigmoid(y_pred) - y_true
 
       expected = sess.run(out)
       expected_der = sess.run(der_for_y_pred)
